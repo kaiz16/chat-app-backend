@@ -8,7 +8,7 @@ app.use(express.json())
 
 
 let corsOptions = {
-    origin: 'http://localhost:8080'
+    origin: '*' // allow from anywhere ( * means everything )
 }
 app.use(cors(corsOptions))
 // mock database
