@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <div class="conversation">
+    <Authenticate/>
+    <!-- <div class="conversation">
       <Messages v-bind:messages="messages"></Messages>
       <SendMessage></SendMessage>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 // import axios from 'axios'
-import SendMessage from './components/SendMessage.vue'
-import Messages from './components/Messages.vue'
+import Authenticate from './components/Authenticate.vue'
+// import Messages from './components/Messages.vue'
 export default {
   name: 'App',
   data(){
@@ -19,8 +20,8 @@ export default {
     }
   },
   components: {
-    SendMessage,
-    Messages,
+    Authenticate,
+    // Messages,
   },
 }
 </script>
