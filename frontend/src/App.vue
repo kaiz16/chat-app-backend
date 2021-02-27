@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <h1>Chat App</h1>
-    <message-component v-bind:messages="messages"></message-component>
-    <send-message v-on:sendMessage="sendNewMessage"></send-message>
+    <div class="conversation">
+      <Messages v-bind:messages="messages"></Messages>
+      <SendMessage></SendMessage>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import SendMessage from './components/SendMessage.vue'
 import Messages from './components/Messages.vue'
 export default {
@@ -18,53 +19,38 @@ export default {
     }
   },
   components: {
-    'send-message': SendMessage,
-    'message-component': Messages
+    SendMessage,
+    Messages,
   },
-  mounted(){
-    setInterval(() => {
-      this.getMessages()
-    }, 1000);
-  },
-  methods: {
-    getMessages(){
-      axios({
-        url: 'http://localhost:3000/messages',
-        method: 'get'
-      }).then( data => {
-         this.messages = data.data
-      })
-    },
-    sendNewMessage(message){
-      axios({
-        url: 'http://localhost:3000/newMessage',
-        method: 'post',
-        data: {
-          msg: message
-        }
-      }).then( data => {
-         this.messages.push(data.data)
-      })
-    }
-  }
 }
 </script>
 
 <style>
+* {
+  font-family: monospace;
+}
+
 html, body {
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
+  background: #edf1f5;
+  font-size: 100%;
 }
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  height: 100%;
+}
+
+.conversation{
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
+  overflow: hidden;
 }
 </style>

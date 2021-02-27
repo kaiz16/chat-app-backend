@@ -1,38 +1,53 @@
 <template>
-    <div class="messages">
-        <div class="box"  v-for="(message, index) in messages" v-bind:key="index">
-            <p>{{message.msg}}</p>
-        </div>
+  <div class="wrapper">
+    <div class="chat" v-for="message in 100" v-bind:key="message">
+      <span class="name">John Smith</span>
+      <span class="time">{{' at ' + (new Date).getHours() + ':' + (new Date).getMinutes()}}</span>
+      <p
+        class="message"
+      >Hello World!</p>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: ['messages']
-}
+  props: {
+    messages: {
+      type: Array,
+      required: true
+    }
+  }
+};
 </script>
 
-<style>
-.messages{
+<style scoped>
+.wrapper {
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: auto;
-  align-items: center;
   width: 100%;
 }
 
-.box{
-    background: #2d2d2d;
-    margin: 10px;
-    color: #cdcdcd;
-    padding: 10px;
-    font-size: .75em;
-    border-radius: 10px;
-    width: fit-content;
+.chat {
+  padding: 10px;
+  margin: 10px;
 }
 
-p{
-    margin: 0
+.chat .message {
+  background: #fff;
+  color: #000;
+  padding: 10px;
+  border-radius: 0 10px 10px 10px;
+  width: fit-content;
+}
+
+.chat .time {
+    color: #9399a1;
+}
+
+p {
+  margin: 0;
 }
 </style>
