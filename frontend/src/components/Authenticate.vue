@@ -40,6 +40,8 @@ export default {
         });
 
         sessionStorage.setItem('token', data.token)
+
+        this.$emit('loggedIn')
       } catch (error) {
         console.error(error);
       }

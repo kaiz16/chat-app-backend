@@ -1,21 +1,42 @@
 <template>
   <div class="wrapper">
-    <div class="chat" v-for="message in 100" v-bind:key="message">
-      <span class="name">John Smith</span>
+    <div class="chat" v-for="chat in messages" v-bind:key="chat._id">
+      <span class="name">{{ chat.username }}</span>
       <span class="time">{{' at ' + (new Date).getHours() + ':' + (new Date).getMinutes()}}</span>
       <p
         class="message"
-      >Hello World!</p>
+      >{{ chat.message }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import { API } from '../../config.json'
+import axios from 'axios';
 export default {
-  props: {
-    messages: {
-      type: Array,
-      required: true
+  data(){
+    return {
+      messages: []
+    }
+  },
+  mounted(){
+    this.fetchMessages()
+  },
+  methods: {
+    async fetchMessages(){
+      const url = API + '/messages'
+
+      const { data } = await axios(url, {
+        method: "GET",
+        headers: {
+          'content-type': 'application/json',
+          'authorization': sessionStorage.getItem('token')
+        }
+      })
+
+      if (data.length){
+        this.messages = data
+      }
     }
   }
 };

@@ -1,28 +1,44 @@
 <template>
   <div id="app">
-    <Authenticate/>
-    <!-- <div class="conversation">
+    <div class="conversation" v-if="isLoggedIn === true">
       <Messages v-bind:messages="messages"></Messages>
       <SendMessage></SendMessage>
-    </div> -->
+    </div>
+    <Authenticate v-else v-on:loggedIn="isLoggedIn = true"/>
   </div>
 </template>
 
 <script>
 // import axios from 'axios'
 import Authenticate from './components/Authenticate.vue'
-// import Messages from './components/Messages.vue'
+import Messages from './components/Messages.vue'
+import SendMessage from './components/SendMessage.vue'
 export default {
   name: 'App',
   data(){
     return {
-      messages: []
+      messages: [],
+      isLoggedIn: false
     }
   },
   components: {
     Authenticate,
-    // Messages,
+    SendMessage,
+    Messages,
   },
+  mounted(){
+    this.checkLoggedIn()
+  },
+  methods: {
+    checkLoggedIn(){
+      let token = sessionStorage.getItem('token')
+      if (token){
+        this.isLoggedIn = true
+      }else{
+        this.isLoggedIn = false
+      }
+    }
+  }
 }
 </script>
 
