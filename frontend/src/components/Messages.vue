@@ -11,7 +11,12 @@
 </template>
 
 <script>
-import { API } from '../../config.json'
+
+import { API, WS } from '../../config.json'
+
+const io = require('socket.io-client')
+const socket = io(WS);
+
 import axios from 'axios';
 export default {
   data(){
@@ -21,8 +26,20 @@ export default {
   },
   mounted(){
     this.fetchMessages()
+    socket.on("incomingNewMessage", (message) => {
+      this.messages.push(message)
+      // after dom update
+      this.$nextTick( () => {
+        this.scroll()
+      })
+    })
   },
   methods: {
+    scroll(){
+      let chats = document.querySelectorAll('.chat')
+      chats[chats.length - 1].
+      scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    },
     async fetchMessages(){
       const url = API + '/messages'
 

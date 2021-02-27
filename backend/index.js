@@ -34,6 +34,21 @@ mongoose.connect(process.env.MongoDB, {
 // if port is defined in env file, use that otherwise use 8000
 const PORT = process.env.PORT || 8000
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log('App is now listening on ' + PORT)
+})
+
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST", "DELETE", "PUT"]
+    }
+});
+// ws
+
+io.on('connection', (socket) => {
+    console.log('User is now connected to our websocket server')
+    socket.on('newMessage', (message) => {
+       io.emit('incomingNewMessage', message)
+    })
 })

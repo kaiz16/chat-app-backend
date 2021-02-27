@@ -7,7 +7,11 @@
 </template>
 
 <script>
-import { API } from '../../config.json'
+import { API, WS } from '../../config.json'
+
+const io = require('socket.io-client')
+const socket = io(WS);
+
 import axios from 'axios'
 export default {
   data() {
@@ -35,9 +39,8 @@ export default {
           }
         }) 
 
-        console.log(data)
-
         this.newMessage = ''
+        socket.emit('newMessage', data)
       } catch (error) {
         console.error(error)
       }
